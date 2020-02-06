@@ -1,0 +1,22 @@
+name: sms_listener
+description: A new Flutter package project.
+version: 0.0.1
+homepage: "https://github.com/Oskang09/sms_listener"
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: me.oska.sms_listener
+        pluginClass: SmsListenerPlugin
