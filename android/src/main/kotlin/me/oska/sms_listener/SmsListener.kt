@@ -21,7 +21,7 @@ class SmsListener(private var context: Context): BroadcastReceiver(), EventChann
     }
 
     private fun hasPermission(): Boolean {
-        val permission = context.packageManager.checkPermission(Manifest.permission.RECEIVE_SMS, context.packageName)
+        val permission = context.checkCallingOrSelfPermission(Manifest.permission.RECEIVE_SMS);
         return permission == PackageManager.PERMISSION_GRANTED;
     }
 
