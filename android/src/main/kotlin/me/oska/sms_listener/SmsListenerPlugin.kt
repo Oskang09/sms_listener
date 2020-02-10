@@ -22,7 +22,7 @@ class SmsListenerPlugin: FlutterPlugin {
   }
 
   private fun onInit(context: Context, messenger: BinaryMessenger) {
-    listener = SmsListener(context)
+    listener = SmsListener(context);
     EventChannel(messenger, CHANNEL).setStreamHandler(listener)
   }
 
