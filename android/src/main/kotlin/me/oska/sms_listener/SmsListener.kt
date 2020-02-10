@@ -1,9 +1,11 @@
 package me.oska.sms_listener
 
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Telephony
 import android.telephony.SmsMessage
@@ -18,8 +20,18 @@ class SmsListener(private var context: Context): BroadcastReceiver(), EventChann
         return _eventSink != null;
     }
 
+    private fun hasPermission(): Boolean {
+        val permission = context.checkCallingOrSelfPermission(Manifest.permission.RECEIVE_SMS);
+        return permission == PackageManager.PERMISSION_GRANTED;
+    }
+
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
         this._eventSink = events;
+        if (!hasPermission()) {
+            _eventSink?.error("NO_PERMISSION", "Sms read permission is not granted.", null);
+            this._eventSink = null;
+            return
+        }
         context.registerReceiver(this, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
     }
 
